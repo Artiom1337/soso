@@ -1,32 +1,40 @@
 import tkinter as tk
 from tkinter import messagebox
+import threading
+import time
 
-def start_timer():
-    try:
-        time_left = int(entry.get())
-        countdown(time_left)
-    except ValueError:
-        messagebox.showerror("Ошибка", "Введите число!")
+class TimerApp:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("Таймер")
+        self.root.geometry("300x200")
 
-def countdown(time_left):
-    if time_left > 0:
-        mins, secs = divmod(time_left, 60)
-        label.config(text=f"{mins:02}:{secs:02}")
-        root.after(1000, countdown, time_left - 1)
-    else:
-        label.config(text="00:00")
+        self.label = tk.Label(root, text="00:00", font=("Arial", 30))
+        self.label.pack(pady=20)
+
+        self.entry = tk.Entry(root)
+        self.entry.pack()
+
+        self.start_button = tk.Button(root, text="Старт", command=self.start_timer)
+        self.start_button.pack(pady=10)
+
+    def countdown(self, seconds):
+        while seconds > 0:
+            mins, secs = divmod(seconds, 60)
+            self.label.config(text=f"{mins:02}:{secs:02}")
+            time.sleep(1)
+            seconds -= 1
+        self.label.config(text="00:00")
         messagebox.showinfo("Таймер", "Время вышло!")
 
-root = tk.Tk()
-root.title("Таймер")
+    def start_timer(self):
+        try:
+            seconds = int(self.entry.get())
+            threading.Thread(target=self.countdown, args=(seconds,), daemon=True).start()
+        except ValueError:
+            messagebox.showerror("Ошибка", "Введите число!")
 
-label = tk.Label(root, text="00:00", font=("Arial", 30))
-label.pack()
-
-entry = tk.Entry(root)
-entry.pack()
-
-btn = tk.Button(root, text="Старт", command=start_timer)
-btn.pack()
-
-root.mainloop()
+def start_gui():
+    root = tk.Tk()
+    app = TimerApp(root)
+    root.mainloop()
