@@ -22,7 +22,18 @@ class MultiThreadedClockApp:
         self.style = ttk.Style()
         self.style.configure('TFrame', background=self.dark_blue)
         self.style.configure('TLabel', background=self.dark_blue, foreground=self.text_color, font=('Arial', 12))
-        self.style.configure('TButton', background=self.light_blue, foreground=self.text_color, font=('Arial', 12))
+        
+        # Настройка стилей для кнопок
+        self.style.configure('TButton', 
+                            background=self.light_blue,
+                            foreground=self.text_color,
+                            font=('Arial', 12))
+        
+        # Создаем новый стиль для активных кнопок
+        self.style.map('TButton',
+                    background=[('active', self.accent_color)],
+                    foreground=[('active', '#ffffff')])
+        
         self.style.configure('Header.TLabel', background=self.dark_blue, foreground=self.accent_color, font=('Arial', 18, 'bold'))
         
         # Создаем вкладки
@@ -387,5 +398,6 @@ def run_app():
     app = MultiThreadedClockApp(root)
     root.mainloop()
 
-if __name__ == "__main__":
-    run_app()
+def create_app():
+    root = tk.Tk()
+    return MultiThreadedClockApp(root), root
