@@ -1,6 +1,4 @@
-def print_hi(name):
-    print(f'Hi, {name}')  
+from timer import run_timer
 
-if __name__ == '__main__':
-    print('Test Foka')
-
+if __name__ == "__main__":
+    run_timer()
