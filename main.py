@@ -5,28 +5,32 @@ from timer_artiom import TimerApp as TimerArtiomApp
 from timer_foca import TimerApp as TimerFocaApp
 
 def start_vanea_timer():
-    root_vanea = tk.Tk()
+    # Создаем отдельное окно для таймера Vanea
+    root_vanea = tk.Toplevel()
     app_vanea = TimerVaneaApp(root_vanea)
     root_vanea.mainloop()
 
-
 def start_artiom_timer():
-    root_artiom = tk.Tk()
+    # Создаем отдельное окно для таймера Artiom
+    root_artiom = tk.Toplevel()
     app_artiom = TimerArtiomApp(root_artiom)
     root_artiom.mainloop()
 
-
 def start_foca_timer():
-    root_foca = tk.Tk()
+    # Создаем отдельное окно для таймера Foca
+    root_foca = tk.Toplevel()
     app_foca = TimerFocaApp(root_foca)
     root_foca.mainloop()
 
 if __name__ == "__main__":
+    # Создаем основное окно, оно будет держать все другие окна в себе
+    root = tk.Tk()
+    root.withdraw()  # Скрываем главное окно, оно нам не нужно
+
     # Запуск таймеров в отдельных потоках
     threading.Thread(target=start_vanea_timer, daemon=True).start()
     threading.Thread(target=start_artiom_timer, daemon=True).start()
     threading.Thread(target=start_foca_timer, daemon=True).start()
 
-    # Основной цикл для поддержания работы всех окон
-    # Этот основной поток не должен завершаться, иначе окна закроются
-    tk.Tk().mainloop()  # Это обеспечит работу всех окон
+    # Основной цикл
+    root.mainloop()
