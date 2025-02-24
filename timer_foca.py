@@ -4,7 +4,7 @@ import threading
 import time
 import datetime
 
-class MultiThreadedClockApp:
+class TimerApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Многофункциональные часы")
@@ -13,7 +13,7 @@ class MultiThreadedClockApp:
         # Устанавливаем тёмно-синюю тему
         self.dark_blue = "#1a2a57"
         self.light_blue = "#3a4a77"
-        self.text_color = "#ffffff"
+        self.text_color = "#FF1493"
         self.accent_color = "#4d94ff"
         
         self.root.configure(bg=self.dark_blue)
@@ -395,9 +395,10 @@ class MultiThreadedClockApp:
 
 def run_app():
     root = tk.Tk()
-    app = MultiThreadedClockApp(root)
+    app = TimerApp(root)
     root.mainloop()
 
 def create_app():
     root = tk.Tk()
-    return MultiThreadedClockApp(root), root
+    return TimerApp(root), root
+
