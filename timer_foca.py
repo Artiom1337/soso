@@ -401,4 +401,3 @@ def run_app():
 def create_app():
     root = tk.Tk()
     return TimerApp(root), root
-
